@@ -1,3 +1,0 @@
-201 {'track': 32526}
-https://qa-scooter.praktikum-services.ru/api/v1/orders/track?t=32526
-404 {'code': 404, 'message': 'Not Found.'}

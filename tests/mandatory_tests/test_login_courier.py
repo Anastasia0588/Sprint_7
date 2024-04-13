@@ -1,12 +1,12 @@
 import pytest
 import requests
 import allure
-
 import test_data
 
 
 class TestLoginCourier:
 
+    @allure.title('Успешная авторизация курьера')
     def test_login_courier_success(self, current_login_password):
 
         payload = {

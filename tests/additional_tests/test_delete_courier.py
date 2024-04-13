@@ -1,12 +1,11 @@
 import requests
 import allure
-
 import test_data
 
 
-class TestCreateOrder:
+class TestDeleteOrder:
 
-    @allure.title('Успешное даление курьера')
+    @allure.title('Успешное удаление курьера')
     def test_delete_courier_success(self, current_login_password):
 
         payload = {
@@ -15,10 +14,10 @@ class TestCreateOrder:
         }
 
         response = requests.post(test_data.LOGIN_COURIER, data=payload)
-        id = response.json()["id"]
-        payload = {"id": id}
+        courier_id = response.json()["id"]
+        payload = {"id": courier_id}
 
-        response = requests.delete(f'{test_data.DELETE_COURIER}{id}', data=payload)
+        response = requests.delete(f'{test_data.DELETE_COURIER}{courier_id}', data=payload)
 
         assert response.status_code == 200 and response.json()["ok"] == True
 

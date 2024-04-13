@@ -5,12 +5,12 @@ import allure
 
 import test_data
 
+
 class TestCreateOrder:
 
     @allure.title('Создание заказа с разными цветами')
     @pytest.mark.parametrize("color", [["BLACK"], ["GREY"], ["BLACK", "GREY"], []])
     def test_create_orders_with_different_colors(self, color):
-
         payload = {
             "firstName": "Naruto",
             "lastName": "Uchiha",

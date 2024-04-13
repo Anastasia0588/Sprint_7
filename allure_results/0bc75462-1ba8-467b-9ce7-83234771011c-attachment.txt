@@ -1,4 +1,0 @@
-200 {'id': 291260}
-201 {'track': 985869}
-https://qa-scooter.praktikum-services.ru/api/v1/orders/accept/985869?courierId=291260
-404 {'code': 404, 'message': 'Заказа с таким id не существует'}

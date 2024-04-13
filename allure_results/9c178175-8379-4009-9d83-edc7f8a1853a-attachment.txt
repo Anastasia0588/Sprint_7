@@ -1,1 +1,0 @@
-{'login': 'qsybbeihif', 'password': 'wgvkbtnsfh1'}
