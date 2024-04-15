@@ -3,7 +3,7 @@ import requests
 import json
 import allure
 
-import test_data
+from urls import Url, Endpoint
 
 
 class TestCreateOrder:
@@ -24,6 +24,6 @@ class TestCreateOrder:
         }
 
         payload_string = json.dumps(payload)
-        response = requests.post(test_data.CREATE_ORDER, data=payload_string)
+        response = requests.post(f"{Url.BASE_URL}{Endpoint.ORDER}", data=payload_string)
 
         assert response.status_code == 201 and "track" in response.json()
