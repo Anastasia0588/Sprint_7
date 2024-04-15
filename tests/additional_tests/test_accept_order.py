@@ -1,7 +1,8 @@
 import json
 import requests
 import allure
-import test_data
+
+from urls import Url, Endpoint
 
 
 class TestAcceptOrder:
@@ -13,7 +14,7 @@ class TestAcceptOrder:
             "login": current_login_password["login"],
             "password": current_login_password["password"]
         }
-        response = requests.post(test_data.LOGIN_COURIER, data=payload)
+        response = requests.post(f"{Url.BASE_URL}{Endpoint.LOGIN}", data=payload)
         courier_id = response.json()["id"]
         print(response.status_code, response.json())
 
@@ -29,17 +30,14 @@ class TestAcceptOrder:
             "color": ["BLACK"]
         }
 
-
         payload_string = json.dumps(payload)
-        response = requests.post(test_data.CREATE_ORDER, data=payload_string)
+        response = requests.post(f"{Url.BASE_URL}{Endpoint.ORDER}", data=payload_string)
         print(response.status_code, response.json())
         order_id = response.json()["track"]
 
-        print(f"{test_data.ACCEPT_ORDER}{order_id}?courierId={courier_id}")
+        response = requests.put(f"{Url.BASE_URL}{Endpoint.ACCEPT_ORDER}{order_id}?courierId={courier_id}")
 
-        response = requests.put(f"{test_data.ACCEPT_ORDER}{order_id}?courierId={courier_id}")
-        print(response.status_code, response.json())
-        assert response.status_code == 200
+        assert response.status_code == 200 and 'order' in response.json()
 
 
 
