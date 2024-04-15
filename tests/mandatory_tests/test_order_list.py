@@ -1,7 +1,7 @@
 import requests
 import allure
 
-import test_data
+from urls import Url, Endpoint
 
 
 class TestOrderList:
@@ -9,5 +9,5 @@ class TestOrderList:
     @allure.title('Получение списка заказов')
     def test_get_order_list(self):
 
-        response = requests.get(test_data.ORDER_LIST)
+        response = requests.get(f"{Url.BASE_URL}{Endpoint.ORDER}")
         assert response.status_code == 200 and "orders" in response.json()
