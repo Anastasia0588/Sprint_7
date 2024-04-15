@@ -1,7 +1,8 @@
 import json
 import requests
 import allure
-import test_data
+
+from urls import Url, Endpoint
 
 class TestGetOrderByNumber:
 
@@ -21,10 +22,8 @@ class TestGetOrderByNumber:
         }
 
         payload_string = json.dumps(payload)
-        response = requests.post(test_data.CREATE_ORDER, data=payload_string)
+        response = requests.post(f"{Url.BASE_URL}{Endpoint.ORDER}", data=payload_string)
         order_id = response.json()["track"]
-        print(response.status_code, response.json())
-        print(f"{test_data.GET_ORDER_BY_NUMBER}?t={order_id}")
-        response = requests.post(f"{test_data.GET_ORDER_BY_NUMBER}?t={order_id}")
-        print(response.status_code, response.json())
-        assert response.status_code == 200
+        response = requests.post(f"{Url.BASE_URL}{Endpoint.GET_ORDER_BY_NUMBER}?t={order_id}")
+
+        assert response.status_code == 200 and 'order' in response.json()
