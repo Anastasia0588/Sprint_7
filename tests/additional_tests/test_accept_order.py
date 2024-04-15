@@ -35,7 +35,7 @@ class TestAcceptOrder:
         order_id = response.json()["track"]
         response = requests.put(f"{Url.BASE_URL}{Endpoint.ACCEPT_ORDER}{order_id}?courierId={courier_id}")
 
-        assert response.status_code == 200 and 'order' in response.json()
+        assert response.status_code == 200 and response.json()["ok"] is True
 
 
 
