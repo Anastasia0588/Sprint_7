@@ -1,6 +1,7 @@
 import requests
 import allure
-import test_data
+
+from urls import Url, Endpoint
 
 
 class TestDeleteOrder:
@@ -13,19 +14,19 @@ class TestDeleteOrder:
             "password": current_login_password["password"]
         }
 
-        response = requests.post(test_data.LOGIN_COURIER, data=payload)
+        response = requests.post(f"{Url.BASE_URL}{Endpoint.LOGIN}", data=payload)
         courier_id = response.json()["id"]
         payload = {"id": courier_id}
 
-        response = requests.delete(f'{test_data.DELETE_COURIER}{courier_id}', data=payload)
+        response = requests.delete(f"{Url.BASE_URL}{Endpoint.DELETE_COURIER}{courier_id}", data=payload)
 
-        assert response.status_code == 200 and response.json()["ok"] == True
+        assert response.status_code == 200 and response.json()["ok"] is True
 
 
     @allure.title("Удаление курьера без указания id")
     def test_delete_courier_without_id_failed(self):
 
-        response = requests.delete(test_data.DELETE_COURIER)
+        response = requests.delete(f"{Url.BASE_URL}{Endpoint.DELETE_COURIER}")
         assert response.status_code == 400 and response.json()["message"] == "Недостаточно данных для удаления курьера"
         # баг, в ответе возвращается код 404
 
@@ -38,11 +39,10 @@ class TestDeleteOrder:
             "password": current_login_password["password"]
         }
 
-        response = requests.post(test_data.LOGIN_COURIER, data=payload)
-        id = response.json()["id"]
+        response = requests.post(f"{Url.BASE_URL}{Endpoint.LOGIN}", data=payload)
+        courier_id = response.json()["id"]
+        payload = {"id": courier_id}
 
-        payload = {"id": id}
-
-        response = requests.delete(f'{test_data.DELETE_COURIER}{id}123', data=payload)
+        response = requests.delete(f"{Url.BASE_URL}{Endpoint.DELETE_COURIER}{courier_id}123", data=payload)
 
         assert response.status_code == 404 and response.json()["message"] == "Курьера с таким id нет."

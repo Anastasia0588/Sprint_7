@@ -32,9 +32,7 @@ class TestAcceptOrder:
 
         payload_string = json.dumps(payload)
         response = requests.post(f"{Url.BASE_URL}{Endpoint.ORDER}", data=payload_string)
-        print(response.status_code, response.json())
         order_id = response.json()["track"]
-
         response = requests.put(f"{Url.BASE_URL}{Endpoint.ACCEPT_ORDER}{order_id}?courierId={courier_id}")
 
         assert response.status_code == 200 and 'order' in response.json()
