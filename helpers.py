@@ -1,8 +1,12 @@
 import requests
 import random
 import string
+import allure
+
+from urls import Url, Endpoint
 
 
+@allure.step("Генерация данных для регистрации нового курьера")
 def generate_login_password():
 
     # метод генерирует строку, состоящую только из букв нижнего регистра, в качестве параметра передаём длину строки
@@ -25,7 +29,7 @@ def generate_login_password():
 
     return payload
 
-# метод регистрации нового курьера возвращает список из логина и пароля
+@allure.step("Регистрации нового курьера возвращает список из логина и пароля")
 # если регистрация не удалась, возвращает пустой список
 def register_new_courier(login, password):
 
@@ -38,7 +42,7 @@ def register_new_courier(login, password):
     login_pass = {}
 
     # отправляем запрос на регистрацию курьера и сохраняем ответ в переменную response
-    response = requests.post('https://qa-scooter.praktikum-services.ru/api/v1/courier', data=payload)
+    response = requests.post(f"{Url.BASE_URL}{Endpoint.COURIER}", data=payload)
 
     # если регистрация прошла успешно (код ответа 201), добавляем в список логин и пароль курьера
     if response.status_code == 201:
